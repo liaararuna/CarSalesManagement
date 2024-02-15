@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+skinparam actorStyle awesome
+
+Functionary as Func
+
+Func --> (Visualize all cars)
+Func --> (Visualize a car)
+Func --> (Visualize all customers)
+Func --> (Visualize a customer)
+Func --> (Add a customer)
+Func --> (Update a customer)
+Func --> (Sell a car)
+Func --> (Change car status)
+Func --> (Add a car)
+Func --> (Update a car)
+
+@enduml
