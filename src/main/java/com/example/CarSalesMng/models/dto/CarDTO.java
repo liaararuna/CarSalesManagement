@@ -1,4 +1,4 @@
-package com.example.CarSalesMng.models;
+package com.example.CarSalesMng.models.dto;
 
 import org.springframework.hateoas.RepresentationModel;
 

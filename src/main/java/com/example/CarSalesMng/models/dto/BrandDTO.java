@@ -1,13 +1,10 @@
-package com.example.CarSalesMng.models;
+package com.example.CarSalesMng.models.dto;
 
-import jakarta.persistence.Entity;
-
-@Entity
-public class CustomerDTO {
+public class BrandDTO {
     private int id;
     private String name;
 
-    public CustomerDTO(int id, String name) {
+    public BrandDTO(int id, String name) {
         this.id = id;
         this.name = name;
     }
