@@ -1,6 +1,8 @@
 package com.example.CarSalesMng.models.dto;
 
-public class BrandDTO {
+import org.springframework.hateoas.RepresentationModel;
+
+public class BrandDTO extends RepresentationModel<BrandDTO> {
     private int id;
     private String name;
 

@@ -1,9 +1,9 @@
 package com.example.CarSalesMng.models.dto;
 
-import jakarta.persistence.Entity;
 
-@Entity
-public class CustomerDTO {
+import org.springframework.hateoas.RepresentationModel;
+
+public class CustomerDTO extends RepresentationModel<CustomerDTO> {
     private int id;
     private String name;
 
