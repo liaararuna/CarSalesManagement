@@ -1,6 +1,8 @@
 package com.example.CarSalesMng.models.dto;
 
 import com.example.CarSalesMng.enums.CarStatus;
+import com.example.CarSalesMng.models.Model;
+import com.example.CarSalesMng.models.Seller;
 import org.springframework.hateoas.RepresentationModel;
 
 public class CarDTO extends RepresentationModel<CarDTO> {
@@ -9,19 +11,21 @@ public class CarDTO extends RepresentationModel<CarDTO> {
     private int numberOfDoors;
     private String color;
     private int releaseYear;
-    private int modelId;
+    private Model model;
     private String fuelType;
     private CarStatus carStatus;
+    private Seller seller;
 
-    public CarDTO(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, int modelId, String fuelType, CarStatus status) {
+    public CarDTO(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, Model model, String fuelType, CarStatus status, Seller seller) {
         this.vin = vin;
         this.licensePlate = licensePlate;
         this.numberOfDoors = numberOfDoors;
         this.color = color;
         this.releaseYear = releaseYear;
-        this.modelId = modelId;
+        this.model = model;
         this.fuelType = fuelType;
         this.carStatus = status;
+        this.seller = seller;
     }
 
     public int getVin() {
@@ -64,12 +68,12 @@ public class CarDTO extends RepresentationModel<CarDTO> {
         this.releaseYear = releaseYear;
     }
 
-    public int getModelId() {
-        return modelId;
+    public Model getModel() {
+        return this.model;
     }
 
-    public void setModelId(int modelId) {
-        this.modelId = modelId;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     public String getFuelType() {
@@ -86,5 +90,13 @@ public class CarDTO extends RepresentationModel<CarDTO> {
 
     public void setCarStatus(CarStatus carStatus) {
         this.carStatus = carStatus;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 }

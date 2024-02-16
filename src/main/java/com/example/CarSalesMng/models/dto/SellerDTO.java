@@ -1,6 +1,10 @@
 package com.example.CarSalesMng.models.dto;
 
+import com.example.CarSalesMng.models.Car;
 import org.springframework.hateoas.RepresentationModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SellerDTO extends RepresentationModel<SellerDTO> {
     private int id;
@@ -8,6 +12,16 @@ public class SellerDTO extends RepresentationModel<SellerDTO> {
     private String nif;
     private String address;
     private String phoneNumber;
+    private List<Car> carList;
+
+    public SellerDTO(int id, String name, String nif, String address, String phoneNumber, List<Car> carList) {
+        this.id = id;
+        this.name = name;
+        this.nif = nif;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.carList = new ArrayList<>(carList);
+    }
 
     public SellerDTO(int id, String name, String nif, String address, String phoneNumber) {
         this.id = id;
@@ -15,6 +29,7 @@ public class SellerDTO extends RepresentationModel<SellerDTO> {
         this.nif = nif;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.carList = new ArrayList<>();
     }
 
     public SellerDTO() { }
@@ -57,5 +72,13 @@ public class SellerDTO extends RepresentationModel<SellerDTO> {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Car> getCarList() {
+        return new ArrayList<>(this.carList);
+    }
+
+    public void setCarList(List<Car> carLisT) {
+        this.carList = new ArrayList<>(carList);
     }
 }

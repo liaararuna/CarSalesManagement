@@ -2,6 +2,10 @@ package com.example.CarSalesMng.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Seller {
@@ -12,12 +16,25 @@ public class Seller {
     private String address;
     private String phoneNumber;
 
+    @OneToMany
+    private List<Car> carList;
+
     public Seller(int id, String name, String nif, String address, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.nif = nif;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.carList = new ArrayList<>();
+    }
+
+    public Seller(int id, String name, String nif, String address, String phoneNumber, List<Car> carList) {
+        this.id = id;
+        this.name = name;
+        this.nif = nif;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.carList = new ArrayList<>(carList);
     }
 
     public Seller() { }
@@ -58,5 +75,13 @@ public class Seller {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Car> getCarList() {
+        return new ArrayList<>(this.carList);
+    }
+
+    public void setCarList(List<Car> carList) {
+        this.carList = carList;
     }
 }

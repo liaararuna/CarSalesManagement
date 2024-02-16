@@ -25,7 +25,8 @@ public class SellerService {
                 seller.getName(),
                 seller.getNif(),
                 seller.getAddress(),
-                seller.getPhoneNumber()
+                seller.getPhoneNumber(),
+                seller.getCarList()
         );
     }
 
@@ -42,7 +43,8 @@ public class SellerService {
                     seller.getName(),
                     seller.getNif(),
                     seller.getAddress(),
-                    seller.getPhoneNumber()
+                    seller.getPhoneNumber(),
+                    seller.getCarList()
             );
             sellerDTOList.add(sellerDTO);
         }
@@ -55,7 +57,8 @@ public class SellerService {
                 newSellerDTO.getName(),
                 newSellerDTO.getNif(),
                 newSellerDTO.getAddress(),
-                newSellerDTO.getPhoneNumber()
+                newSellerDTO.getPhoneNumber(),
+                newSellerDTO.getCarList()
         );
 
         this.sellerRepository.save(newSeller);
@@ -69,7 +72,8 @@ public class SellerService {
                 updatedSellerDTO.getName(),
                 updatedSellerDTO.getNif(),
                 updatedSellerDTO.getAddress(),
-                updatedSellerDTO.getPhoneNumber()
+                updatedSellerDTO.getPhoneNumber(),
+                updatedSellerDTO.getCarList()
         );
 
         this.sellerRepository.save(newSeller);

@@ -3,6 +3,9 @@ package com.example.CarSalesMng.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import com.example.CarSalesMng.enums.CarStatus;
+import jakarta.persistence.ManyToOne;
+
+import java.util.List;
 
 @Entity
 public class Car {
@@ -12,20 +15,24 @@ public class Car {
     private int numberOfDoors;
     private String color;
     private int releaseYear;
-    private int modelId;
+    @ManyToOne
+    private Model model;
     private String fuelType;
     private CarStatus carStatus;
+    @ManyToOne
+    private Seller seller;
 
 
-    public Car(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, int modelId, String fuelType, CarStatus status) {
+    public Car(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, Model model, String fuelType, CarStatus status, Seller seller) {
         this.vin = vin;
         this.licensePlate = licensePlate;
         this.numberOfDoors = numberOfDoors;
         this.color = color;
         this.releaseYear = releaseYear;
-        this.modelId = modelId;
+        this.model = model;
         this.fuelType = fuelType;
         this.carStatus = status;
+        this.seller = seller;
     }
 
     public Car() { }
@@ -69,12 +76,12 @@ public class Car {
         this.releaseYear = releaseYear;
     }
 
-    public int getModelId() {
-        return modelId;
+    public Model getModel() {
+        return this.model;
     }
 
-    public void setModelId(int modelId) {
-        this.modelId = modelId;
+    public void setModelId(Model model) {
+        this.model = model;
     }
 
     public String getFuelType() {
@@ -92,4 +99,6 @@ public class Car {
     public void setCarStatus(CarStatus status) {
         this.carStatus = status;
     }
+
+    public Seller getSeller() { return this.seller; }
 }

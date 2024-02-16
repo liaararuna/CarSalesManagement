@@ -26,9 +26,10 @@ public class CarService {
                     car.getNumberOfDoors(),
                     car.getColor(),
                     car.getReleaseYear(),
-                    car.getModelId(),
+                    car.getModel(),
                     car.getFuelType(),
-                    car.getCarStatus());
+                    car.getCarStatus(),
+                    car.getSeller());
             carDTOList.add(carDTO);
         }
 
@@ -43,9 +44,10 @@ public class CarService {
                 otherCar.getNumberOfDoors(),
                 otherCar.getColor(),
                 otherCar.getReleaseYear(),
-                otherCar.getModelId(),
+                otherCar.getModel(),
                 otherCar.getFuelType(),
-                otherCar.getCarStatus());
+                otherCar.getCarStatus(),
+                otherCar.getSeller());
         return otherCarDTO;
     }
 
@@ -55,19 +57,21 @@ public class CarService {
                 carDTO.getNumberOfDoors(),
                 carDTO.getColor(),
                 carDTO.getReleaseYear(),
-                carDTO.getModelId(),
+                carDTO.getModel(),
                 carDTO.getFuelType(),
-                carDTO.getCarStatus())
+                carDTO.getCarStatus(),
+                carDTO.getSeller())
         );
 
         CarDTO newCarDTO = new CarDTO(newCar.getVin(),
                 newCar.getLicensePlate(),
                 newCar.getNumberOfDoors(),
                 newCar.getColor(),
-                newCar.getModelId(),
                 newCar.getReleaseYear(),
+                newCar.getModel(),
                 newCar.getFuelType(),
-                newCar.getCarStatus()
+                newCar.getCarStatus(),
+                newCar.getSeller()
         );
 
         return newCarDTO;
@@ -75,8 +79,27 @@ public class CarService {
 
 
     public CarDTO update(CarDTO carDTO) {
-        Car updatedCar = this.carRepository.save(new Car(carDTO.getVin(), carDTO.getLicensePlate(), carDTO.getNumberOfDoors(), carDTO.getColor(), carDTO.getReleaseYear(), carDTO.getModelId(), carDTO.getFuelType(), carDTO.getCarStatus()));
-        CarDTO newCarDTO = new CarDTO(updatedCar.getVin(), updatedCar.getLicensePlate(), updatedCar.getNumberOfDoors(), updatedCar.getColor(), updatedCar.getModelId(), updatedCar.getReleaseYear(), updatedCar.getFuelType(), updatedCar.getCarStatus());
-        return newCarDTO;
+        Car updatedCar = this.carRepository.save(new Car(
+                carDTO.getVin(),
+                carDTO.getLicensePlate(),
+                carDTO.getNumberOfDoors(),
+                carDTO.getColor(),
+                carDTO.getReleaseYear(),
+                carDTO.getModel(),
+                carDTO.getFuelType(),
+                carDTO.getCarStatus(),
+                carDTO.getSeller()));
+
+        return new CarDTO(
+                updatedCar.getVin(),
+                updatedCar.getLicensePlate(),
+                updatedCar.getNumberOfDoors(),
+                updatedCar.getColor(),
+                updatedCar.getReleaseYear(),
+                updatedCar.getModel(),
+                updatedCar.getFuelType(),
+                updatedCar.getCarStatus(),
+                updatedCar.getSeller()
+        );
     }
 }
