@@ -15,6 +15,8 @@ public class Car {
     private int modelId;
     private String fuelType;
     private CarStatus carStatus;
+    @
+    private Seller seller;
 
     public Car(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, int modelId, String fuelType, CarStatus status) {
         this.vin = vin;
