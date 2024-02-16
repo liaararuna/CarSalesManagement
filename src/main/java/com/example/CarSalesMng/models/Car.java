@@ -2,6 +2,7 @@ package com.example.CarSalesMng.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import com.example.CarSalesMng.enums.CarStatus;
 
 @Entity
 public class Car {
@@ -13,9 +14,9 @@ public class Car {
     private int releaseYear;
     private int modelId;
     private String fuelType;
-    private String status;
+    private CarStatus carStatus;
 
-    public Car(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, int modelId, String fuelType, String status) {
+    public Car(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, int modelId, String fuelType, CarStatus status) {
         this.vin = vin;
         this.licensePlate = licensePlate;
         this.numberOfDoors = numberOfDoors;
@@ -23,7 +24,7 @@ public class Car {
         this.releaseYear = releaseYear;
         this.modelId = modelId;
         this.fuelType = fuelType;
-        this.status = status;
+        this.carStatus = status;
     }
 
     public Car() { }
@@ -83,11 +84,11 @@ public class Car {
         this.fuelType = fuelType;
     }
 
-    public String getStatus() {
-        return status;
+    public CarStatus getCarStatus() {
+        return this.carStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCarStatus(CarStatus status) {
+        this.carStatus = status;
     }
 }
