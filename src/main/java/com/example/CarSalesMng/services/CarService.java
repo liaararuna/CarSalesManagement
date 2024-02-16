@@ -1,6 +1,7 @@
 package com.example.CarSalesMng.services;
 
 import com.example.CarSalesMng.data.CarRepository;
+import com.example.CarSalesMng.enums.CarStatus;
 import com.example.CarSalesMng.models.Car;
 import com.example.CarSalesMng.models.dto.CarDTO;
 import org.apache.commons.lang3.NotImplementedException;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CarService {
+public class CarService implements CarRepository{
     @Autowired
     private CarRepository carRepository;
 
@@ -101,5 +102,27 @@ public class CarService {
                 updatedCar.getCarStatus(),
                 updatedCar.getSeller()
         );
+    }
+
+    public CarDTO updateCarStatus(int vin, CarStatus carStatus) {
+        Car car = this.carRepository.findById(vin).orElse(null);
+
+        car.setCarStatus(carStatus);
+
+        Car otherCar = this.carRepository.save(car);
+
+        CarDTO carDTO = new CarDTO(
+                otherCar.getVin(),
+                otherCar.getLicensePlate(),
+                otherCar.getNumberOfDoors(),
+                otherCar.getColor(),
+                otherCar.getReleaseYear(),
+                otherCar.getModel(),
+                otherCar.getFuelType(),
+                otherCar.getCarStatus(),
+                otherCar.getSeller()
+        );
+
+        return carDTO;
     }
 }

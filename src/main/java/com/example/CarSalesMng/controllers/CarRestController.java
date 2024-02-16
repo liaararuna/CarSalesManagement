@@ -1,5 +1,6 @@
 package com.example.CarSalesMng.controllers;
 
+import com.example.CarSalesMng.enums.CarStatus;
 import com.example.CarSalesMng.models.dto.CarDTO;
 import com.example.CarSalesMng.services.CarService;
 import org.apache.commons.lang3.NotImplementedException;
@@ -72,5 +73,24 @@ public class CarRestController {
         CarDTO carDTO2 = carService.update(carDTO);
 
         return new ResponseEntity<>(carDTO2, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/cars/{vin}", consumes = "application/json")
+    public ResponseEntity<CarDTO> updateCarStatus(@PathVariable("vin") int vin,
+                                                  @RequestParam("carStatus") CarStatus carStatus) {
+        CarDTO otherCarDTO = this.carService.getCarByVin(vin);
+
+        if(otherCarDTO == null) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
+
+        if (carStatus == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        CarDTO updatedCarStatus = this.carService.updateCarStatus(vin, carStatus);
+        
+        if(updatedCarStatus == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(updatedCarStatus, HttpStatus.OK);
     }
 }

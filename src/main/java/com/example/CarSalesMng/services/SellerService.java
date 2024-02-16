@@ -1,9 +1,10 @@
 package com.example.CarSalesMng.services;
 
 import com.example.CarSalesMng.data.SellerRepository;
+import com.example.CarSalesMng.enums.CarStatus;
 import com.example.CarSalesMng.models.Seller;
+import com.example.CarSalesMng.models.dto.CarDTO;
 import com.example.CarSalesMng.models.dto.SellerDTO;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,4 +81,5 @@ public class SellerService {
 
         return updatedSellerDTO;
     }
+
 }
