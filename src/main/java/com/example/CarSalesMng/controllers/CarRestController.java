@@ -67,13 +67,13 @@ public class CarRestController {
 
 
     @PutMapping(value = "/cars/{vin}", consumes = "application/json")
-    public CarDTO updateCar(@PathVariable("vin") int vin,
+    public ResponseEntity<CarDTO> updateCar(@PathVariable("vin") int vin,
                             @RequestBody CarDTO carDTO) {
-        if(carDTO.getVin() != vin) { throw new NotImplementedException(); }
+        if(carDTO.getVin() != vin) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
         carDTO.setVin(vin);
         Car updatedCar = carService.update(new Car(carDTO.getVin(), carDTO.getLicensePlate(), carDTO.getNumberOfDoors(), carDTO.getColor(), carDTO.getReleaseYear(), carDTO.getModelId(), carDTO.getFuelType(), carDTO.getStatus()));
         CarDTO carDTO2 = new CarDTO(updatedCar.getVin(), updatedCar.getLicensePlate(), updatedCar.getNumberOfDoors(), updatedCar.getColor(), updatedCar.getReleaseYear(), updatedCar.getModelId(), updatedCar.getFuelType(), updatedCar.getStatus());
 
-        return carDTO2;
+        return new ResponseEntity<>(carDTO2, HttpStatus.OK);
     }
 }
