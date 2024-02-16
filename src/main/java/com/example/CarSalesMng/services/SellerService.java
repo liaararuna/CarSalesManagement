@@ -2,10 +2,12 @@ package com.example.CarSalesMng.services;
 
 import com.example.CarSalesMng.data.SellerRepository;
 import com.example.CarSalesMng.models.Seller;
+import com.example.CarSalesMng.models.dto.SellerDTO;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,25 +15,65 @@ public class SellerService {
     @Autowired
     private SellerRepository sellerRepository;
 
-    public Seller getSellerById(int id) {
-        return this.sellerRepository.findById(id).orElse(null);
+    public SellerDTO getSellerById(int id) {
+        Seller seller = this.sellerRepository.findById(id).orElse(null);
+
+        if(seller == null) { return null; }
+
+        return new SellerDTO(
+                seller.getId(),
+                seller.getName(),
+                seller.getNif(),
+                seller.getAddress(),
+                seller.getPhoneNumber()
+        );
     }
 
-    public List<Seller> getAllSellers() {
-        return this.sellerRepository.findAll();
-    }
+    public List<SellerDTO> getAllSellers() {
+        List<Seller> sellerList = this.sellerRepository.findAll();
 
-    public Seller add(Seller newSeller) {
-        if(newSeller == null) {
-            throw new IllegalArgumentException();
+        if(sellerList == null) { return null; }
+
+        List<SellerDTO> sellerDTOList = new ArrayList<>();
+
+        for(Seller seller : sellerList) {
+            SellerDTO sellerDTO = new SellerDTO(
+                    seller.getId(),
+                    seller.getName(),
+                    seller.getNif(),
+                    seller.getAddress(),
+                    seller.getPhoneNumber()
+            );
+            sellerDTOList.add(sellerDTO);
         }
-        return this.sellerRepository.save(newSeller);
+        return sellerDTOList;
     }
 
-    public Seller update(Seller updatedSeller) {
-        if(updatedSeller == null) {
-            throw new NotImplementedException();
-        }
-        return this.sellerRepository.save(updatedSeller);
+    public SellerDTO add(SellerDTO newSellerDTO) {
+        Seller newSeller = new Seller(
+                newSellerDTO.getId(),
+                newSellerDTO.getName(),
+                newSellerDTO.getNif(),
+                newSellerDTO.getAddress(),
+                newSellerDTO.getPhoneNumber()
+        );
+
+        this.sellerRepository.save(newSeller);
+
+        return newSellerDTO;
+    }
+
+    public SellerDTO update(SellerDTO updatedSellerDTO) {
+        Seller newSeller = new Seller(
+                updatedSellerDTO.getId(),
+                updatedSellerDTO.getName(),
+                updatedSellerDTO.getNif(),
+                updatedSellerDTO.getAddress(),
+                updatedSellerDTO.getPhoneNumber()
+        );
+
+        this.sellerRepository.save(newSeller);
+
+        return updatedSellerDTO;
     }
 }

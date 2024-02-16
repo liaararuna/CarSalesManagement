@@ -25,16 +25,12 @@ public class SellerRestController {
 
     @GetMapping(value = "/sellers", produces = "application/json")
     public CollectionModel<SellerDTO> getAllSellers() {
-        List<Seller> sellerList = this.sellerService.getAllSellers();
+        List<SellerDTO> sellerDTOList = this.sellerService.getAllSellers();
 
-        if(sellerList == null) { throw new NotImplementedException(); }
+        if(sellerDTOList == null) { throw new NotImplementedException(); }
 
-        List<SellerDTO> sellerDTOList = new ArrayList<>();
-
-        for(Seller seller : sellerList) {
-            SellerDTO sellerDTO = new SellerDTO(seller.getId(), seller.getName(), seller.getNif(), seller.getAddress(), seller.getPhoneNumber());
+        for(SellerDTO sellerDTO : sellerDTOList) {
             sellerDTO.add(linkTo(methodOn(SellerRestController.class).getSeller(sellerDTO.getId())).withSelfRel());
-            sellerDTOList.add(sellerDTO);
         }
 
         Link link = linkTo(methodOn(SellerRestController.class).getAllSellers()).withSelfRel();
@@ -44,11 +40,10 @@ public class SellerRestController {
 
     @GetMapping(value = "/sellers/{id}", produces = "application/json")
     public ResponseEntity<SellerDTO> getSeller(@PathVariable("id") int id) {
-        Seller seller = this.sellerService.getSellerById(id);
+        SellerDTO sellerDTO = this.sellerService.getSellerById(id);
 
-        if(seller == null) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
+        if(sellerDTO == null) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
 
-        SellerDTO sellerDTO = new SellerDTO(seller.getId(), seller.getName(), seller.getNif(), seller.getAddress(), seller.getPhoneNumber());
         sellerDTO.add(linkTo(methodOn(SellerRestController.class).getAllSellers()).withSelfRel());
 
         return new ResponseEntity<>(sellerDTO, HttpStatus.OK);
@@ -56,16 +51,13 @@ public class SellerRestController {
 
     @PostMapping(value = "/seller", produces = "application/json", consumes = "application/json")
     public ResponseEntity<SellerDTO> addSeller(@RequestBody SellerDTO sellerDTO) {
-        if(sellerDTO == null) { throw new IllegalArgumentException(); }
+        if(sellerDTO == null) { new ResponseEntity<>(HttpStatus.BAD_REQUEST); }
 
-        Seller newSeller = new Seller(sellerDTO.getId(), sellerDTO.getName(), sellerDTO.getNif(), sellerDTO.getAddress(), sellerDTO.getPhoneNumber());
-        this.sellerService.add(newSeller);
+        SellerDTO newSellerDTO = this.sellerService.add(sellerDTO);
+        newSellerDTO.add(linkTo(methodOn(SellerRestController.class).getSeller(sellerDTO.getId())).withSelfRel());
+        newSellerDTO.add(linkTo(methodOn(SellerRestController.class).getAllSellers()).withRel("see_all_sellers"));
 
-        SellerDTO otherSellerDTO = new SellerDTO(newSeller.getId(), newSeller.getName(), newSeller.getNif(), newSeller.getAddress(), newSeller.getPhoneNumber());
-        otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getSeller(newSeller.getId())).withSelfRel());
-        otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getAllSellers()).withRel("see_all_sellers"));
-
-        return new ResponseEntity<>(otherSellerDTO, HttpStatus.OK);
+        return new ResponseEntity<>(newSellerDTO, HttpStatus.OK);
     }
 
     @PutMapping(value = "/sellers/{id}", produces = "application/json")
@@ -73,11 +65,15 @@ public class SellerRestController {
                                             @RequestBody SellerDTO sellerDTO) {
         if(sellerDTO.getId() != id) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
 
-        Seller updatedSeller = new Seller(sellerDTO.getId(), sellerDTO.getName(), sellerDTO.getNif(), sellerDTO.getAddress(), sellerDTO.getPhoneNumber());
-        sellerService.update(updatedSeller);
+        this.sellerService.update(sellerDTO);
 
-        SellerDTO otherSellerDTO = new SellerDTO(updatedSeller.getId(), updatedSeller.getName(), updatedSeller.getNif(), updatedSeller.getAddress(), updatedSeller.getPhoneNumber());
-        otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getSeller(updatedSeller.getId())).withSelfRel());
+        SellerDTO otherSellerDTO = new SellerDTO(
+                sellerDTO.getId(),
+                sellerDTO.getName(),
+                sellerDTO.getNif(),
+                sellerDTO.getAddress(),
+                sellerDTO.getPhoneNumber());
+        otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getSeller(sellerDTO.getId())).withSelfRel());
         otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getAllSellers()).withRel("see_all_sellers"));
 
         return new ResponseEntity<>(otherSellerDTO, HttpStatus.OK);
