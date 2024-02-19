@@ -1,6 +1,5 @@
 package com.example.CarSalesMng.controllers;
 
-import com.example.CarSalesMng.models.Seller;
 import com.example.CarSalesMng.models.dto.SellerDTO;
 import com.example.CarSalesMng.services.SellerService;
 import org.apache.commons.lang3.NotImplementedException;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -61,7 +59,7 @@ public class SellerRestController {
     }
 
     @PutMapping(value = "/sellers/{id}", produces = "application/json")
-    public ResponseEntity<SellerDTO> update(@PathVariable("id") int id,
+    public ResponseEntity<SellerDTO> updateSeller(@PathVariable("id") int id,
                                             @RequestBody SellerDTO sellerDTO) {
         if(sellerDTO.getId() != id) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
 
@@ -72,7 +70,8 @@ public class SellerRestController {
                 sellerDTO.getName(),
                 sellerDTO.getNif(),
                 sellerDTO.getAddress(),
-                sellerDTO.getPhoneNumber());
+                sellerDTO.getPhoneNumber()
+        );
         otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getSeller(sellerDTO.getId())).withSelfRel());
         otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getAllSellers()).withRel("see_all_sellers"));
 

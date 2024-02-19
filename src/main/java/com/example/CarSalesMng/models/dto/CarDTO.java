@@ -1,6 +1,7 @@
 package com.example.CarSalesMng.models.dto;
 
 import com.example.CarSalesMng.enums.CarStatus;
+import com.example.CarSalesMng.models.Car;
 import com.example.CarSalesMng.models.Model;
 import com.example.CarSalesMng.models.Seller;
 import org.springframework.hateoas.RepresentationModel;
@@ -26,6 +27,18 @@ public class CarDTO extends RepresentationModel<CarDTO> {
         this.fuelType = fuelType;
         this.carStatus = status;
         this.seller = seller;
+    }
+
+    public CarDTO(Car car) {
+        this.vin = car.getVin();
+        this.licensePlate = car.getLicensePlate();
+        this.numberOfDoors = car.getNumberOfDoors();
+        this.color = car.getColor();
+        this.releaseYear = car.getReleaseYear();
+        this.model = car.getModel();
+        this.fuelType = car.getFuelType();
+        this.carStatus = car.getCarStatus();
+        this.seller = car.getSeller();
     }
 
     public int getVin() {

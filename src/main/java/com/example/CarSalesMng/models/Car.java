@@ -1,5 +1,6 @@
 package com.example.CarSalesMng.models;
 
+import com.example.CarSalesMng.models.dto.CarDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import com.example.CarSalesMng.enums.CarStatus;
@@ -101,4 +102,5 @@ public class Car {
     }
 
     public Seller getSeller() { return this.seller; }
+
 }
