@@ -87,7 +87,7 @@ public class CarRestController {
         }
 
         CarDTO updatedCarStatus = this.carService.updateCarStatus(vin, carStatus);
-        
+
         if(updatedCarStatus == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

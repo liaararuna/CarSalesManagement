@@ -2,18 +2,20 @@ package com.example.CarSalesMng.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Model {
     @Id
     private int id;
     private String name;
-    private int brandId;
+    @ManyToOne
+    private Brand brand;
 
-    public Model(int id, String name, int brandId) {
+    public Model(int id, String name, Brand brand) {
         this.id = id;
         this.name = name;
-        this.brandId = brandId;
+        this.brand = brand;
     }
 
     public Model() { }
@@ -34,11 +36,11 @@ public class Model {
         this.name = name;
     }
 
-    public int getBrandId() {
-        return brandId;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setBrandId(int brandId) {
-        this.brandId = brandId;
+    public void setBrandId(Brand brand) {
+        this.brand = brand;
     }
 }
