@@ -11,10 +11,15 @@ import com.example.CarSalesMng.models.dto.BrandDTO;
 import com.example.CarSalesMng.models.dto.CarDTO;
 import com.example.CarSalesMng.models.dto.ModelDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService{
@@ -27,21 +32,19 @@ public class CarService{
     @Autowired
     private BrandRepository brandRepository;
 
-    public List<CarDTO> getAllCars() {
-        List<Car> carList = this.carRepository.findAll();
+    public Page<CarDTO> getAllCars(int page, int size) {
+        Page<Car> carPage = this.carRepository.findAll(PageRequest.of(page,size));
 
-        if(carList == null) {
+        if(!carPage.hasContent()) {
             //TODO: throw new TableIsEmptyException();
             throw new IllegalArgumentException("TableIsEmptyException");
         }
 
-        List<CarDTO> carDTOList = new ArrayList<>();
+        Page<CarDTO> carDTOPage = new PageImpl<>(carPage.getContent().stream()
+                .map(CarDTO::new)
+                .collect(Collectors.toList()), carPage.getPageable(), carPage.getTotalElements());
 
-        for(Car car : carList) {
-            carDTOList.add(new CarDTO(car));
-        }
-
-        return carDTOList;
+        return carDTOPage;
     }
 
     public CarDTO getCarByVin(int vin) {
@@ -108,21 +111,19 @@ public class CarService{
         return carDTO;
     }*/
 
-    public List<ModelDTO> getAllModels()  {
-        List<Model> modelList = this.modelRepository.findAll();
+    public Page<ModelDTO> getAllModels(int page, int size)  {
+        Page<Model> modelPage = this.modelRepository.findAll(PageRequest.of(page,size));
 
-        if(modelList == null) {
-            //TODO: throw new TableIsEmptyException("Model", "getAllModels()");
+        if(!modelPage.hasContent()) {
+            //TODO: throw new TableIsEmptyException();
             throw new IllegalArgumentException("TableIsEmptyException");
         }
 
-        List<ModelDTO> modelDTOList = new ArrayList<>();
+        Page<ModelDTO> modelDTOPage = new PageImpl<>(modelPage.getContent().stream()
+                .map(ModelDTO::new)
+                .collect(Collectors.toList()), modelPage.getPageable(), modelPage.getTotalElements());
 
-        for(Model model : modelList) {
-            modelDTOList.add(new ModelDTO(model));
-        }
-
-        return modelDTOList;
+        return modelDTOPage;
     }
 
     public ModelDTO getModel(int id) {
@@ -193,21 +194,20 @@ public class CarService{
     }
 
 
-    public List<BrandDTO> getAllBrands() {
-        List<Brand> brandList = this.brandRepository.findAll();
+    public Page<BrandDTO> getAllBrands(int page, int size) {
 
-        if(brandList == null) {
+        Page<Brand> brandPage = this.brandRepository.findAll(PageRequest.of(page,size));
+
+        if(!brandPage.hasContent()) {
             //TODO: throw new TableIsEmptyException();
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("TableIsEmptyException");
         }
 
-        List<BrandDTO> brandDTOList = new ArrayList<>();
+        Page<BrandDTO> brandDTOPage = new PageImpl<>(brandPage.getContent().stream()
+                .map(BrandDTO::new)
+                .collect(Collectors.toList()), brandPage.getPageable(), brandPage.getTotalElements());
 
-        for(Brand brand : brandList) {
-            brandDTOList.add(new BrandDTO(brand));
-        }
-
-        return brandDTOList;
+        return brandDTOPage;
     }
 
     public BrandDTO getBrandById(int id) {
@@ -286,6 +286,7 @@ public class CarService{
         return carsList;
     }
 
+    /*
     public List<CarDTO> findCarByBuyerId(int buyerId) {
         List<CarDTO> carsList = this.carRepository.findCarByBuyerId(buyerId);
 
@@ -294,5 +295,5 @@ public class CarService{
         }
 
         return carsList;
-    }
+    }*/
 }

@@ -18,6 +18,6 @@ public interface CarRepository extends JpaRepository<Car,Integer> {
 
     List<CarDTO> findCarByModel(Model model);
 
-    List<CarDTO> findCarByBuyerId(int id);
+    //List<CarDTO> findCarByBuyerId(int id);
 
 }
