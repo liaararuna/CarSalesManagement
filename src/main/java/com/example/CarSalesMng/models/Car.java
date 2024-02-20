@@ -1,10 +1,8 @@
 package com.example.CarSalesMng.models;
 
 import com.example.CarSalesMng.models.dto.CarDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import com.example.CarSalesMng.enums.CarStatus;
-import jakarta.persistence.ManyToOne;
 
 import java.util.List;
 
@@ -19,13 +17,16 @@ public class Car {
     @ManyToOne
     private Model model;
     private String fuelType;
+
+    //@Enumerated(EnumType.STRING) - Para fazer com que o enum seja salvo com string.
     private CarStatus carStatus;
     @ManyToOne
     private Seller seller;
 
     //TODO: Incluir posteriormente com .NET.
-    private Buyer buyer;
+    //private Buyer buyer;
     private int idTransaction;
+
 
 
     public Car(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, Model model, String fuelType, CarStatus status, Seller seller) {

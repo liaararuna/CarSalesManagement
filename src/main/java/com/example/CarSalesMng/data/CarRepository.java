@@ -1,7 +1,6 @@
 package com.example.CarSalesMng.data;
 
 import com.example.CarSalesMng.enums.CarStatus;
-import com.example.CarSalesMng.models.Buyer;
 import com.example.CarSalesMng.models.Car;
 import com.example.CarSalesMng.models.Model;
 import com.example.CarSalesMng.models.dto.CarDTO;
@@ -13,7 +12,9 @@ public interface CarRepository extends JpaRepository<Car,Integer> {
 
     //CarDTO updateCarStatus(int vin, CarStatus carStatus);
 
-    List<CarDTO> findCarByStatus(CarStatus carStatus);
+    List<CarDTO> findCarByCarStatus(CarStatus carStatus);
+
+    List<CarDTO> findCarByIdTransaction(int idTransaction);
 
     List<CarDTO> findCarByModel(Model model);
 

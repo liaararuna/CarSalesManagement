@@ -1,8 +1,10 @@
 package com.example.CarSalesMng.controllers;
 
+import com.example.CarSalesMng.enums.CarStatus;
 import com.example.CarSalesMng.exceptions.EntityAlreadyExistsException;
 import com.example.CarSalesMng.exceptions.EntityDoesntExistException;
 import com.example.CarSalesMng.exceptions.TableIsEmptyException;
+import com.example.CarSalesMng.models.Model;
 import com.example.CarSalesMng.models.dto.BrandDTO;
 import com.example.CarSalesMng.models.dto.CarDTO;
 import com.example.CarSalesMng.models.dto.ModelDTO;
@@ -45,6 +47,21 @@ public class CarRestController {
         carDTO.add(linkTo(methodOn(CarRestController.class).getCar(vin)).withSelfRel());
 
         return new ResponseEntity<>(carDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/cars/{status}", consumes = "application/json", produces = "application/json")
+    public List<CarDTO> findCarByStatus(@PathVariable("status") CarStatus carStatus) {
+        return this.carService.findCarByStatus(carStatus);
+    }
+
+    @GetMapping(value = "/cars/{model}", consumes = "application/json", produces = "application/json")
+    public List<CarDTO> findCarByModel(@PathVariable("model") Model model) {
+        return this.carService.findCarByModel(model);
+    }
+
+    @GetMapping(value = "/cars/buyer/{buyerId}", consumes = "application/json", produces = "application/json")
+    public List<CarDTO> findCarByBuyerId(@PathVariable("id") int buyerId) {
+        return this.carService.findCarByBuyerId(buyerId);
     }
 
     @PostMapping(value = "/car", consumes = "application/json", produces = "application/json")

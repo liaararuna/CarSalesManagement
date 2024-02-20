@@ -4,11 +4,7 @@ import com.example.CarSalesMng.data.BrandRepository;
 import com.example.CarSalesMng.data.CarRepository;
 import com.example.CarSalesMng.data.ModelRepository;
 import com.example.CarSalesMng.enums.CarStatus;
-import com.example.CarSalesMng.exceptions.EntityAlreadyExistsException;
-import com.example.CarSalesMng.exceptions.EntityDoesntExistException;
-import com.example.CarSalesMng.exceptions.TableIsEmptyException;
 import com.example.CarSalesMng.models.Brand;
-import com.example.CarSalesMng.models.Buyer;
 import com.example.CarSalesMng.models.Car;
 import com.example.CarSalesMng.models.Model;
 import com.example.CarSalesMng.models.dto.BrandDTO;
@@ -270,18 +266,33 @@ public class CarService{
         this.brandRepository.deleteById(brandDTO.getId());
     }
 
-    public List<CarDTO> getCarsByStatus(CarStatus carStatus) {
-        List<CarDTO> carsList = this.getAllCars();
+    public List<CarDTO> findCarByStatus(CarStatus carStatus) {
+        List<CarDTO> carsList = this.carRepository.findCarByCarStatus(carStatus);
 
-        List<CarDTO> carDTOByStatusList = new ArrayList<>();
-
-        for(CarDTO carDTO : carsList) {
-            if(carDTO.getCarStatus().equals(carStatus)) {
-                carDTOByStatusList.add(carDTO);
-            }
+        if(carsList == null) {
+            throw new IllegalArgumentException("There's no car with these status");
         }
 
-        return carDTOByStatusList;
+        return carsList;
     }
 
+    public List<CarDTO> findCarByModel(Model model) {
+        List<CarDTO> carsList = this.carRepository.findCarByModel(model);
+
+        if(carsList == null) {
+            throw new IllegalArgumentException("There's no car with these model");
+        }
+
+        return carsList;
+    }
+
+    public List<CarDTO> findCarByBuyerId(int buyerId) {
+        List<CarDTO> carsList = this.carRepository.findCarByBuyerId(buyerId);
+
+        if(carsList == null) {
+            throw new IllegalArgumentException("There's no car for this buyer");
+        }
+
+        return carsList;
+    }
 }
