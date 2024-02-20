@@ -23,6 +23,10 @@ public class Car {
     @ManyToOne
     private Seller seller;
 
+    //TODO: Incluir posteriormente com .NET.
+    private Buyer buyer;
+    private int idTransaction;
+
 
     public Car(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, Model model, String fuelType, CarStatus status, Seller seller) {
         this.vin = vin;
@@ -102,5 +106,6 @@ public class Car {
     }
 
     public Seller getSeller() { return this.seller; }
+
 
 }

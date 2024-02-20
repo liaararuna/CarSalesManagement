@@ -1,3 +1,3 @@
 package com.example.CarSalesMng.enums;
 
-public enum CarStatus { AVALIABLE, SOLD, OUT_OF_STOCK, RESERVED  }
+public enum CarStatus { INSTOCK, SOLD, OUTOFSTOCK, INSPECTION, RESERVED }

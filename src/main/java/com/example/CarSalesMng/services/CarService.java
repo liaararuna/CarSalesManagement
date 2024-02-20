@@ -3,7 +3,12 @@ package com.example.CarSalesMng.services;
 import com.example.CarSalesMng.data.BrandRepository;
 import com.example.CarSalesMng.data.CarRepository;
 import com.example.CarSalesMng.data.ModelRepository;
+import com.example.CarSalesMng.enums.CarStatus;
+import com.example.CarSalesMng.exceptions.EntityAlreadyExistsException;
+import com.example.CarSalesMng.exceptions.EntityDoesntExistException;
+import com.example.CarSalesMng.exceptions.TableIsEmptyException;
 import com.example.CarSalesMng.models.Brand;
+import com.example.CarSalesMng.models.Buyer;
 import com.example.CarSalesMng.models.Car;
 import com.example.CarSalesMng.models.Model;
 import com.example.CarSalesMng.models.dto.BrandDTO;
@@ -30,8 +35,8 @@ public class CarService{
         List<Car> carList = this.carRepository.findAll();
 
         if(carList == null) {
-            //throw new TableIsEmpty();
-            throw new IllegalArgumentException();
+            //TODO: throw new TableIsEmptyException();
+            throw new IllegalArgumentException("TableIsEmptyException");
         }
 
         List<CarDTO> carDTOList = new ArrayList<>();
@@ -47,27 +52,20 @@ public class CarService{
         Car otherCar = this.carRepository.findById(vin).orElse(null);
 
         if(otherCar == null) {
-            //throw new EntityDoesntExist();
-            throw new IllegalArgumentException();
+            //TODO: throw new EntityDoesntExistException();
+            throw new IllegalArgumentException("EntityDoesntExistException");
         }
 
         return new CarDTO(otherCar);
     }
 
     public CarDTO addCar(CarDTO carDTO) {
-        //Validação do carDTO.
-        if(carDTO == null) {
-            ////////////////TODO:
-            throw new IllegalArgumentException();
-        }
-
         //Validação se o carro já existe no banco de dados.
         Car car = this.carRepository.findById(carDTO.getVin()).orElse(null);
 
         if(car != null) {
-            ////////////////TODO: já existe esse carro no banco de dados.
-            //throw new EntityAlreadyExists();
-            throw new IllegalArgumentException();
+            //TODO: throw new EntityAlreadyExistsException();
+            throw new IllegalArgumentException("EntityAlreadyExistsException");
         }
 
         Car newCar = this.carRepository.save(new Car(carDTO.getVin(),
@@ -114,13 +112,12 @@ public class CarService{
         return carDTO;
     }*/
 
-    public List<ModelDTO> getAllModels() {
+    public List<ModelDTO> getAllModels()  {
         List<Model> modelList = this.modelRepository.findAll();
 
         if(modelList == null) {
-            ////////////////TODO:
-            //throw new TableIsEmptyException();
-            throw new IllegalArgumentException();
+            //TODO: throw new TableIsEmptyException("Model", "getAllModels()");
+            throw new IllegalArgumentException("TableIsEmptyException");
         }
 
         List<ModelDTO> modelDTOList = new ArrayList<>();
@@ -136,7 +133,7 @@ public class CarService{
         Model model = this.modelRepository.findById(id).orElse(null);
 
         if(model == null) {
-            //throw new EntityDoesntExist();
+            //TODO: throw new EntityDoesntExistException("Model", "getModel");
             throw new IllegalArgumentException();
         }
 
@@ -145,15 +142,13 @@ public class CarService{
 
     public ModelDTO addModel(ModelDTO modelDTO) {
         if(modelDTO == null) {
-            ////////////////TODO:
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid data.");
         }
 
         Model model = this.modelRepository.findById(modelDTO.getId()).orElse(null);
 
         if(model != null) {
-            ////////////////TODO: já existe esse modelo no banco de dados.
-            //throw new EntityAlreadyExists();
+            //TODO: throw new EntityAlreadyExistsException("Model", "addModel()");
             throw new IllegalArgumentException();
         }
 
@@ -177,8 +172,7 @@ public class CarService{
         Model model = this.modelRepository.findById(modelDTO.getId()).orElse(null);
 
         if(model == null) {
-            ////////TODO:
-            //throw new EntityDoesntExist();
+            ////////TODO: throw new EntityDoesntExistException();
             throw new IllegalArgumentException();
         }
 
@@ -195,8 +189,7 @@ public class CarService{
         Model model = this.modelRepository.findById(modelDTO.getId()).orElse(null);
 
         if(model == null) {
-            ////////TODO:
-            //throw new EntityDoesntExist();
+            ////////TODO: throw new EntityDoesntExistException();
             throw new IllegalArgumentException();
         }
 
@@ -208,7 +201,7 @@ public class CarService{
         List<Brand> brandList = this.brandRepository.findAll();
 
         if(brandList == null) {
-            //throw new TableIsEmpty();
+            //TODO: throw new TableIsEmptyException();
             throw new IllegalArgumentException();
         }
 
@@ -225,7 +218,7 @@ public class CarService{
         Brand otherBrand = this.brandRepository.findById(id).get();
 
         if(otherBrand == null) {
-            //throw new EntityDoesntExist();
+            //TODO: throw new EntityDoesntExistException();
             throw new IllegalArgumentException();
         }
 
@@ -235,14 +228,13 @@ public class CarService{
     public BrandDTO addBrand(BrandDTO brandDTO) {
         if(brandDTO == null) {
             ////////////////TODO:
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid data");
         }
 
         Brand brand = this.brandRepository.findById(brandDTO.getId()).get();
 
         if(brand != null) {
-            ////////////////TODO: já existe esse modelo no banco de dados.
-            //throw new EntityAlreadyExists();
+            //TODO: throw new EntityAlreadyExistsException();
             throw new IllegalArgumentException();
         }
 
@@ -257,8 +249,7 @@ public class CarService{
         Brand brand = this.brandRepository.findById(brandDTO.getId()).get();
 
         if(brand == null) {
-            ////////TODO:
-            //throw new EntityDoesntExist();
+            //TODO: throw new EntityDoesntExistException();
             throw new IllegalArgumentException();
         }
 
@@ -272,11 +263,25 @@ public class CarService{
         Brand brand = this.brandRepository.findById(brandDTO.getId()).get();
 
         if(brand == null) {
-            ////////TODO:
-            //throw new EntityDoesntExist();
+            ////////TODO: throw new EntityDoesntExistException();
             throw new IllegalArgumentException();
         }
 
         this.brandRepository.deleteById(brandDTO.getId());
     }
+
+    public List<CarDTO> getCarsByStatus(CarStatus carStatus) {
+        List<CarDTO> carsList = this.getAllCars();
+
+        List<CarDTO> carDTOByStatusList = new ArrayList<>();
+
+        for(CarDTO carDTO : carsList) {
+            if(carDTO.getCarStatus().equals(carStatus)) {
+                carDTOByStatusList.add(carDTO);
+            }
+        }
+
+        return carDTOByStatusList;
+    }
+
 }

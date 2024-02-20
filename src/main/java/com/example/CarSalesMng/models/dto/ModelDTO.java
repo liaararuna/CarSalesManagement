@@ -46,4 +46,8 @@ public class ModelDTO extends RepresentationModel<ModelDTO> {
     public void setBrand(Brand brand) {
         this.brand = brand;
     }
+
+    public static ModelDTO toDTO(Model model) {
+        return new ModelDTO(model.getId(), model.getName(), model.getBrand());
+    }
 }

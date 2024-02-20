@@ -25,8 +25,6 @@ public class SellerRestController {
     public CollectionModel<SellerDTO> getAllSellers() {
         List<SellerDTO> sellerDTOList = this.sellerService.getAllSellers();
 
-        if(sellerDTOList == null) { throw new NotImplementedException(); }
-
         for(SellerDTO sellerDTO : sellerDTOList) {
             sellerDTO.add(linkTo(methodOn(SellerRestController.class).getSeller(sellerDTO.getId())).withSelfRel());
         }
@@ -58,23 +56,27 @@ public class SellerRestController {
         return new ResponseEntity<>(newSellerDTO, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/sellers/{id}", produces = "application/json")
+    @PutMapping(value = "/seller/{id}", produces = "application/json")
     public ResponseEntity<SellerDTO> updateSeller(@PathVariable("id") int id,
                                             @RequestBody SellerDTO sellerDTO) {
-        if(sellerDTO.getId() != id) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
 
-        this.sellerService.update(sellerDTO);
+        sellerDTO.setId(id);
+        SellerDTO updatedSeller = this.sellerService.update(sellerDTO);
 
-        SellerDTO otherSellerDTO = new SellerDTO(
-                sellerDTO.getId(),
-                sellerDTO.getName(),
-                sellerDTO.getNif(),
-                sellerDTO.getAddress(),
-                sellerDTO.getPhoneNumber()
-        );
-        otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getSeller(sellerDTO.getId())).withSelfRel());
-        otherSellerDTO.add(linkTo(methodOn(SellerRestController.class).getAllSellers()).withRel("see_all_sellers"));
+        updatedSeller.add(linkTo(methodOn(SellerRestController.class).getSeller(sellerDTO.getId())).withSelfRel());
+        updatedSeller.add(linkTo(methodOn(SellerRestController.class).getAllSellers()).withRel("see_all_sellers"));
 
-        return new ResponseEntity<>(otherSellerDTO, HttpStatus.OK);
+        return new ResponseEntity<>(updatedSeller, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/car/{id}", produces = "application/json")
+    public ResponseEntity<SellerDTO> deleteSeller(@PathVariable("id") int id) {
+        SellerDTO sellerDTO = this.sellerService.getSellerById(id);
+
+        if (sellerDTO != null){
+            SellerDTO deletedSeller = this.sellerService.deleteById(id);
+            return new ResponseEntity<>(deletedSeller,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

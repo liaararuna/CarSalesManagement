@@ -1,5 +1,6 @@
 package com.example.CarSalesMng.models;
 
+import com.example.CarSalesMng.models.dto.SellerDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
