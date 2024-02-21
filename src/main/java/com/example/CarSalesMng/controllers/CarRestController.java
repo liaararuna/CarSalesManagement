@@ -4,6 +4,7 @@ import com.example.CarSalesMng.enums.CarStatus;
 import com.example.CarSalesMng.exceptions.EntityAlreadyExistsException;
 import com.example.CarSalesMng.exceptions.EntityDoesntExistException;
 import com.example.CarSalesMng.exceptions.TableIsEmptyException;
+import com.example.CarSalesMng.models.Car;
 import com.example.CarSalesMng.models.Model;
 import com.example.CarSalesMng.models.dto.BrandDTO;
 import com.example.CarSalesMng.models.dto.CarDTO;
@@ -66,12 +67,12 @@ public class CarRestController {
         return new ResponseEntity<>(carDTO, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/cars/{status}", consumes = "application/json", produces = "application/json")
-    public List<CarDTO> findCarByStatus(@PathVariable("status") CarStatus carStatus) {
-        return this.carService.findCarByStatus(carStatus);
+    @GetMapping(value = "/cars/status/{status}", produces = "application/json")
+    public List<CarDTO> findCarByStatus(@PathVariable("status") CarStatus status) {
+        return this.carService.findCarByStatus(status);
     }
 
-    @GetMapping(value = "/cars/{model}", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/cars/model/{model}", consumes = "application/json", produces = "application/json")
     public List<CarDTO> findCarByModel(@PathVariable("model") Model model) {
         return this.carService.findCarByModel(model);
     }
@@ -196,6 +197,7 @@ public class CarRestController {
         Link link = linkTo(methodOn(CarRestController.class).getAllBrands(Optional.of(_page),Optional.of(_size))).withSelfRel();
         List<Link> links = new ArrayList<>();
         links.add(link);
+
         if(!brandDTOPage.isLast()) {
             Link _link = linkTo(methodOn(CarRestController.class).getAllBrands(Optional.of(_page + 1), size)).withRel("next");
             links.add(_link);

@@ -43,31 +43,23 @@ INSERT INTO seller (id, nif, name, address, phone_number) VALUES (13, '888999000
 
 
 INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-    VALUES (1, 1, 1, 5, 2016, 1, 123456, 'Gray', 'Diesel', 'AR-91-QA');
+    VALUES ('INSTOCK', 1, 1, 5, 2016, 1, 123456, 'Gray', 'Diesel', 'AR-91-QA');
 INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-    VALUES (2, 2, 2, 3, 2012, 2, 654321, 'Red', 'Gas', 'PB-90-QA');
-    -- Carros adicionais
-    INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-        VALUES (1, 3, 3, 4, 2019, 3, 789012, 'Blue', 'Gasoline', 'SP-45-QB');
-
-    INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-        VALUES (2, 4, 4, 5, 2015, 1, 345678, 'White', 'Ethanol', 'MG-67-QC');
-
-    INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-        VALUES (1, 5, 5, 4, 2017, 2, 901234, 'Black', 'Gas', 'RJ-89-QD');
-
-    INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-        VALUES (2, 6, 6, 3, 2014, 3, 567890, 'Silver', 'Diesel', 'BA-12-QE');
-
-    INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-        VALUES (1, 7, 7, 5, 2018, 1, 123987, 'Green', 'Gasoline', 'CE-34-QF');
-
-    INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-        VALUES (2, 8, 8, 4, 2016, 2, 789345, 'Yellow', 'Ethanol', 'SC-56-QG');
-
-    INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-        VALUES (1, 9, 9, 3, 2013, 3, 234567, 'Orange', 'Gas', 'AL-78-QH');
-
-    INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
-        VALUES (2, 10, 10, 5, 2015, 1, 890123, 'Purple', 'Diesel', 'PI-90-QI');
+    VALUES ('SOLD', 2, 2, 3, 2012, 2, 654321, 'Red', 'Gas', 'PB-90-QA');
+INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
+    VALUES ('INSTOCK', 3, 3, 4, 2019, 3, 789012, 'Blue', 'Gasoline', 'SP-45-QB');
+INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
+    VALUES ('SOLD', 4, 4, 5, 2015, 1, 345678, 'White', 'Ethanol', 'MG-67-QC');
+INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
+    VALUES ('OUTOFSTOCK', 5, 5, 4, 2017, 2, 901234, 'Black', 'Gas', 'RJ-89-QD');
+INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
+    VALUES ('INSPECTION', 6, 6, 3, 2014, 3, 567890, 'Silver', 'Diesel', 'BA-12-QE');
+INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
+    VALUES ('SOLD', 7, 7, 5, 2018, 1, 123987, 'Green', 'Gasoline', 'CE-34-QF');
+INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
+    VALUES ('RESERVED', 8, 8, 4, 2016, 2, 789345, 'Yellow', 'Ethanol', 'SC-56-QG');
+INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
+    VALUES ('INSPECTION', 9, 9, 3, 2013, 3, 234567, 'Orange', 'Gas', 'AL-78-QH');
+INSERT INTO car (car_status, id_transaction, model_id, number_of_doors, release_year, seller_id, vin, color, fuel_type, license_plate)
+    VALUES ('SOLD', 10, 10, 5, 2015, 1, 890123, 'Purple', 'Diesel', 'PI-90-QI');
 

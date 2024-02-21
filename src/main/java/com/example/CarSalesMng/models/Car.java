@@ -18,7 +18,7 @@ public class Car {
     private Model model;
     private String fuelType;
 
-    //@Enumerated(EnumType.STRING) - Para fazer com que o enum seja salvo com string.
+    @Enumerated(EnumType.STRING) //- Para fazer com que o enum seja salvo com string.
     private CarStatus carStatus;
     @ManyToOne
     private Seller seller;
@@ -26,8 +26,6 @@ public class Car {
     //TODO: Incluir posteriormente com .NET.
     //private Buyer buyer;
     private int idTransaction;
-
-
 
     public Car(int vin, String licensePlate, int numberOfDoors, String color, int releaseYear, Model model, String fuelType, CarStatus status, Seller seller) {
         this.vin = vin;
