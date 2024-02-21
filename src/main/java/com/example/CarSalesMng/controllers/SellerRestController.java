@@ -1,5 +1,7 @@
 package com.example.CarSalesMng.controllers;
 
+import com.example.CarSalesMng.models.Car;
+import com.example.CarSalesMng.models.dto.CarDTO;
 import com.example.CarSalesMng.models.dto.SellerDTO;
 import com.example.CarSalesMng.services.SellerService;
 import org.apache.commons.lang3.NotImplementedException;
@@ -109,4 +111,6 @@ public class SellerRestController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 }

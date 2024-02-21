@@ -25,8 +25,6 @@ INSERT INTO model (id, name, brand_id) VALUES (13, 'Cruze', 8);
 INSERT INTO model (id, name, brand_id) VALUES (14, 'Civic', 9);
 INSERT INTO model (id, name, brand_id) VALUES (15, 'Altima', 10);
 
-
-
 INSERT INTO seller (id, nif, name, address, phone_number) VALUES (1, '123456789', 'João', 'Rua A, 10', '999 999 999');
 INSERT INTO seller (id, nif, name, address, phone_number) VALUES (2, '987654321', 'Maria', 'Rua B, 10', '999 111 111');
 INSERT INTO seller (id, nif, name, address, phone_number) VALUES (3, '111111111', 'Paula', 'Rua C, 10', '999 222 222');

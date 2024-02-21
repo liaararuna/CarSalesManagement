@@ -67,14 +67,59 @@ public class CarRestController {
         return new ResponseEntity<>(carDTO, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/cars/status/{status}", produces = "application/json")
+    /*@GetMapping(value = "/cars/status/{status}", produces = "application/json")
     public List<CarDTO> findCarByStatus(@PathVariable("status") CarStatus status) {
         return this.carService.findCarByStatus(status);
+    }*/
+
+    @GetMapping(value = "/cars/status/{status}", produces = "application/json")
+    public CollectionModel<CarDTO> findCarByStatus(@PathVariable("status") CarStatus status,
+                                                   @RequestParam(name = "page") Optional<Integer> page,
+                                                   @RequestParam(name="size") Optional<Integer> size,
+                                                   @RequestParam(name="sort")  Optional<String> sort) {
+        int _page=page.orElse(0);
+        int _size=size.orElse(10);
+        String _sort=sort.orElse("name");
+
+        Page<CarDTO> carDTOPage = this.carService.findCarByStatus(status,_page,_size,_sort);
+        carDTOPage = carDTOPage.map((CarDTO c)-> c.add(linkTo(methodOn(CarRestController.class).getCar(c.getVin())).withSelfRel()));
+        Link link = linkTo(methodOn(CarRestController.class).findCarByStatus(status,Optional.of(_page),Optional.of(_size),Optional.of(_sort))).withSelfRel();
+        List<Link> links = new ArrayList<>();
+        links.add(link);
+        if(!carDTOPage.isLast()) {
+            Link _link = linkTo(methodOn(CarRestController.class).findCarByStatus(status,Optional.of(_page + 1), Optional.of(_size),Optional.of(_sort))).withRel("next");
+            links.add(_link);
+        }
+        if(!carDTOPage.isFirst()) {
+            Link _link = linkTo(methodOn(CarRestController.class).findCarByStatus(status,Optional.of(_page - 1), Optional.of(_size),Optional.of(_sort))).withRel("previous");
+            links.add(_link);
+        }
+        return CollectionModel.of(carDTOPage, links);
     }
 
     @GetMapping(value = "/cars/model/{model}", consumes = "application/json", produces = "application/json")
-    public List<CarDTO> findCarByModel(@PathVariable("model") Model model) {
-        return this.carService.findCarByModel(model);
+    public CollectionModel<CarDTO> findCarByModel(@PathVariable("model") Model model,
+                                       @RequestParam(name = "page") Optional<Integer> page,
+                                       @RequestParam(name="size") Optional<Integer> size ) {
+
+        int _page = page.orElse(0);
+        int _size = size.orElse(10);
+
+        Page<CarDTO> carDTOPage = this.carService.findCarByModel(model, _page, _size);
+
+        carDTOPage = carDTOPage.map((CarDTO c)-> c.add(linkTo(methodOn(CarRestController.class).getCar(c.getVin())).withSelfRel()));
+        Link link = linkTo(methodOn(CarRestController.class).findCarByModel(model,Optional.of(_page),Optional.of(_size))).withSelfRel();
+        List<Link> links = new ArrayList<>();
+        links.add(link);
+        if(!carDTOPage.isLast()) {
+            Link _link = linkTo(methodOn(CarRestController.class).findCarByModel(model,Optional.of(_page + 1), Optional.of(_size))).withRel("next");
+            links.add(_link);
+        }
+        if(!carDTOPage.isFirst()) {
+            Link _link = linkTo(methodOn(CarRestController.class).findCarByModel(model,Optional.of(_page - 1), Optional.of(_size))).withRel("previous");
+            links.add(_link);
+        }
+        return CollectionModel.of(carDTOPage, links);
     }
 
     /*
